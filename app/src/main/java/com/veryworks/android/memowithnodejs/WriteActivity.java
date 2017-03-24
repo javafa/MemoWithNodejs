@@ -3,14 +3,16 @@ package com.veryworks.android.memowithnodejs;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.veryworks.android.memowithnodejs.domain.Qna;
+
+import static com.veryworks.android.memowithnodejs.MainActivity.SITE_URL;
 
 public class WriteActivity extends AppCompatActivity {
 
@@ -45,8 +47,13 @@ public class WriteActivity extends AppCompatActivity {
 
                         Gson gson = new Gson();
                         String jsonString = gson.toJson(qna);
+                        String result = Remote.postJson(SITE_URL+"bbs", jsonString);
 
-                        String result = Remote.postJson(MainActivity.SITE_URL+"bbs", jsonString);
+                        if("SUCCESS".equals(result)){
+                            // 성공적으로 등록하면 내가 쓴 글을 목록에 더해준다.
+                            DataStore dataStore = DataStore.getInstance();
+                            dataStore.addData(qna);
+                        }
 
                         return result;
                     }
@@ -54,7 +61,8 @@ public class WriteActivity extends AppCompatActivity {
                     @Override
                     protected void onPostExecute(String result) {
                         super.onPostExecute(result);
-                        Snackbar.make(view, result, Snackbar.LENGTH_LONG).show();
+                        Toast.makeText(WriteActivity.this, result, Toast.LENGTH_LONG).show();
+                        finish();
                     }
                 };
 
@@ -64,5 +72,4 @@ public class WriteActivity extends AppCompatActivity {
             }
         });
     }
-
 }

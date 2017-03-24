@@ -38,6 +38,12 @@ public class ListActivity extends AppCompatActivity {
         setList();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
     ListView listView;
     CustomAdapter adapter;
     List<Qna> datas;
