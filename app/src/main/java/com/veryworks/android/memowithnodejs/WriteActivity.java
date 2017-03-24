@@ -1,5 +1,6 @@
 package com.veryworks.android.memowithnodejs;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -49,11 +50,11 @@ public class WriteActivity extends AppCompatActivity {
                         String jsonString = gson.toJson(qna);
                         String result = Remote.postJson(SITE_URL+"bbs", jsonString);
 
-                        if("SUCCESS".equals(result)){
-                            // 성공적으로 등록하면 내가 쓴 글을 목록에 더해준다.
-                            DataStore dataStore = DataStore.getInstance();
-                            dataStore.addData(qna);
-                        }
+//                        if("SUCCESS".equals(result)){
+//                            // 성공적으로 등록하면 내가 쓴 글을 목록에 더해준다.
+//                            DataStore dataStore = DataStore.getInstance();
+//                            dataStore.addData(qna);
+//                        }
 
                         return result;
                     }
@@ -62,6 +63,8 @@ public class WriteActivity extends AppCompatActivity {
                     protected void onPostExecute(String result) {
                         super.onPostExecute(result);
                         Toast.makeText(WriteActivity.this, result, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(WriteActivity.this, MainActivity.class);
+                        startActivity(intent);
                         finish();
                     }
                 };
