@@ -1,6 +1,6 @@
 package com.veryworks.android.memowithnodejs;
 
-import com.veryworks.android.memowithnodejs.domain.Data;
+import com.veryworks.android.memowithnodejs.domain.Qna;
 
 import java.util.List;
 
@@ -19,13 +19,13 @@ public class DataStore {
         return instance;
     }
 
-    private List<Data.Qna> datas;
+    private List<Qna> datas;
 
-    public List<Data.Qna> getDatas() {
+    public List<Qna> getDatas() {
         return datas;
     }
 
-    public void setDatas(List<Data.Qna> datas) {
+    public void setDatas(List<Qna> datas) {
         this.datas = datas;
     }
 }
